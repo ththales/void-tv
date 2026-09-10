@@ -1,0 +1,1 @@
+const videoPlayer = new Plyr('#plyr-video-player');
