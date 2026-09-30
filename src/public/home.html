@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="pt-BR" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -10,28 +10,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/style.css">
-    <link rel="stylesheet" href="../styles/genres.css">
+    <link rel="stylesheet" href="../styles/home.css">
 </head>
 
 <body>
     <header class="p-3 mb-3 border-bottom">
         <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"> 
                 <p class="logo d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none"><span id="void">Void</span>TV</p>
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="../index.html" class="nav-link px-2 link-body-emphasis">Início</a></li>
+                    <li><a href="/" class="nav-link px-2 link-secondary">Início</a></li>
                     <li><a href="#" class="nav-link px-2 link-body-emphasis"><svg xmlns="http://www.w3.org/2000/svg"
                                 width="16" height="16" fill="currentColor" class="bi bi-fire" viewBox="0 0 16 16">
                                 <path
                                     d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15" />
                             </svg> Popular</a></li>
-                    <li class="nav-link px-2 link-secondary current">Gêneros</li>
+                    <li><a href="../public/genres.html" class="nav-link px-2 link-body-emphasis">Gêneros</a></li>
                     <li><a href="#" class="nav-link px-2 link-body-emphasis">Mais Recente</a></li>
                 </ul>
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                    <input type="search" id="search-bar"
-                        class="form-control" placeholder="Pesquisar..." aria-label="Search"> 
-                </form>
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search"> <input type="search" id="search-bar"
+                        class="form-control" placeholder="Pesquisar..." aria-label="Search"> </form>
                 <div class="dropdown text-end"> <a href="#"
                         class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                         data-bs-toggle="dropdown" aria-expanded="false"> <img src="../src/img/avatar.jpg" alt="mdo"
@@ -51,31 +49,48 @@
     </header>
 
     <main>
-        <div class="container">
-            <h1>Gêneros</h1>
-            <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">Options</label>
-            <select class="form-select" id="inputGroupSelect01">
-                <option selected>Todos</option>
-                <option value="1">Ação</option>
-                <option value="2">Animação</option>
-                <option value="3">Aventura</option>
-                <option value="4">Comédia</option>
-                <option value="5">Crime</option>
-                <option value="6">Drama</option>
-                <option value="7">Fantasia</option>
-                <option value="8">Ficção Científica</option>
-                <option value="9">Romance</option>
-                <option value="10">Suspense</option>
-                <option value="11">Terror</option>
-            </select>
+        <div class="">
+            <div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <a href="https://www.imdb.com/title/tt31170389/"><img src="../src/img/evil-dead-burn.jpg"
+                                class="movie-centered d-block w-100" alt="..."></a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="https://www.imdb.com/title/tt35538033/"><img src="../src/img/resident-evil.jpg"
+                                class="movie-centered d-block w-100" alt="..."></a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="https://www.imdb.com/title/tt27047903/"><img src="../src/img/scream.jpg"
+                                class="movie-centered d-block w-100" alt="..."></a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="https://www.imdb.com/title/tt0266697/"><img src="../src/img/kill-bill.jpg"
+                                class="d-block w-100" alt="..."></a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="https://www.imdb.com/title/tt3783958/"><img src="../src/img/la_la_land.jpg"
+                                class="d-block w-100" alt="..."></a>
+                    </div>
+                    https://4kwallpapers.com/movies/
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-
         </div>
 
         <div class="album py-5 bg-body-tertiary">
             <div class="container">
-                <div class="genres-container row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3">
+                <div class="home-container row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <!-- Vão ser adicionados aqui dinamicamente xd -->
                 </div>
             </div>
         </div>
@@ -99,9 +114,7 @@
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../scripts/movieRender.js"></script>
-    <script src="../scripts/genreFilter.js"></script>
     <script src="../scripts/searchMovie.js"></script>
-
 </body>
 
 </html>

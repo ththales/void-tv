@@ -9,6 +9,15 @@
     object-position: center;
 }
 
+.card-text {
+    color: #9290C3;
+    font-weight: bold;
+}
+
+form {
+    margin: 150px;
+}
+
 @media (max-width: 768px) {
     #carouselExample {
         display: none;
