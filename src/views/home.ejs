@@ -1,0 +1,77 @@
+<%- include("partials/header.ejs") %>
+
+<main>
+    <div class="">
+        <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <a href="https://www.imdb.com/title/tt31170389/"><img src="/img/evil-dead-burn.jpg"
+                            class="movie-centered d-block w-100" alt="..."></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="https://www.imdb.com/title/tt35538033/"><img src="/img/resident-evil.jpg"
+                            class="movie-centered d-block w-100" alt="..."></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="https://www.imdb.com/title/tt27047903/"><img src="/img/scream.jpg"
+                            class="movie-centered d-block w-100" alt="..."></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="https://www.imdb.com/title/tt0266697/"><img src="/img/kill-bill.jpg"
+                            class="d-block w-100" alt="..."></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="https://www.imdb.com/title/tt3783958/"><img src="/img/la_la_land.jpg"
+                            class="d-block w-100" alt="..."></a>
+                </div>
+                https://4kwallpapers.com/movies/
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="home-container row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <% if(locals.movies) { %>
+                    <% movies.forEach(element => { %>
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img src="https://image.tmdb.org/t/p/w500<%= element.poster_path %>"
+                                    class="card-img-top" alt="${element.alt}">
+
+                                <div class="card-body">
+                                    <p class="card-title"><%= element.title %></p>
+
+                                    <p class="card-text">
+                                        <%= element.overview ? element.overview.substring(0, 100) + "..."
+                                            : "Sinopse indisponível." %>
+                                    </p>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a href="/watch/<%= element.id %>" class="btn-outline-secondary">Assistir</a>
+                                        </div>
+
+                                        <small class="text-body-secondary"><%= element.release_date %></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include("partials/footer.ejs") %>

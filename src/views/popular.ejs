@@ -1,0 +1,51 @@
+<%- include("partials/header.ejs") %>
+
+<main class="container">
+    <h1>Popular</h1>
+    <% if (locals.popular) { %>
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4 home-container">
+            <% popular.results.forEach(element=> { %>
+                <div class="col">
+                    <div class="card shadow-sm h-100">
+                        <img src="<%= element.poster_path
+                            ? `https://image.tmdb.org/t/p/w500${element.poster_path}`
+                            : '/images/no-poster.png' %>" class="card-img-top" alt="<%= element.title %>">
+
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= element.title %>
+                            </h5>
+                            <p class="card-text">
+                                <%= element.overview ? element.overview.substring(0, 100) + "..."
+                                    : "Sinopse indisponível." %>
+                            </p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <form action="/watch/<%= element.id %>">
+                                        <button type="submit" class="btn btn-outline-secondary">
+                                            Assistir
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <small class="text-body-secondary">
+                                    <%= element.release_date ? element.release_date.substring(0, 4) : "N/A" %>
+                                </small>
+                            </div>
+
+                            <p class="mt-2 mb-0">
+                                ⭐ <%= element.vote_average.toFixed(1) %>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p>Nenhum filme encontrado.</p>
+    <% } %>
+</main>
+
+<%- include("partials/footer.ejs") %>

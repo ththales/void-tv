@@ -1,0 +1,51 @@
+<%- include("partials/header.ejs") %>
+
+<main>
+    <div class="container">
+        <h1>Gêneros</h1>
+        <div class="input-group mb-3">
+        <label class="input-group-text" for="inputGroupSelect01">Options</label>
+        <select class="form-select" id="inputGroupSelect01">
+            <option selected>Todos</option>
+            <option value="1">Ação</option>
+            <option value="2">Animação</option>
+            <option value="3">Aventura</option>
+            <option value="4">Comédia</option>
+            <option value="5">Crime</option>
+            <option value="6">Drama</option>
+            <option value="7">Fantasia</option>
+            <option value="8">Ficção Científica</option>
+            <option value="9">Romance</option>
+            <option value="10">Suspense</option>
+            <option value="11">Terror</option>
+        </select>
+        </div>
+
+    </div>
+
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="genres-container row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3">
+                <div class="col">
+                    <div class="card shadow-sm">
+                    <img src="${element.imageUrl}" />
+                        <div class="card-body">
+                            <h5 class="card-title">${element.title}</h5>
+                            <p class="card-text">${element.description.substring(0, 60)}...</p>
+                            <small class="text-body-secondary">${element.year} - ${element.duration}</small>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <form action="/watch/${element.title}">
+                                        <button type="submit" class=" btn-outline-secondary">Assistir</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include("partials/footer.ejs") %>

@@ -1,0 +1,47 @@
+<%- include("partials/header.ejs") %>
+
+<main>
+    <section class="container py-4">
+        <div class="mb-3"> <a href="/home" class="text-decoration-none"> ← Voltar</a> </div>
+        <div class="ratio ratio-16x9"> <video id="plyr-video-player" class="w-100" playsinline controls
+                poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg">
+                <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video> </div>
+    </section>
+    <section class="container pb-5">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                    <span class="badge text-bg-secondary"> <%= movieInfo.runtime %> min</span>
+                    <% movieInfo.genres.forEach(genre => { %>
+                        <span class="badge text-bg-secondary"><%= genre.name %></span>
+                    <% }); %>
+                </div>
+                <h1 class="display-5 fw-bold mb-3"> <%= movieInfo.title %> </h1>
+                <p class="lead text-body-secondary"> <%= movieInfo.overview %> </p>
+                <div class="d-flex flex-wrap gap-2 mt-4"> <button type="button" class="btn btn-primary"> Assistir Agora
+                    </button> <button type="button" class="btn btn-outline-light"> + Lista de Desejos </button>
+                    <button type="button" class="btn btn-outline-secondary"> ↗ Compartilhar </button>
+                </div>
+            </div>
+            <aside class="col-lg-4">
+                <div class="border rounded p-4">
+                    <h2 class="h5 mb-3"> Detalhes </h2>
+                    <dl class="row mb-0">
+                        <dt class="col-5 text-body-secondary"> Lançamento </dt>
+                        <dd class="col-7"> <%= movieInfo.release_date %> </dd>
+                        <dt class="col-5 text-body-secondary"> Avaliação </dt>
+                        <dd class="col-7"> ★ <%= Math.floor(movieInfo.vote_average) %> / 10 </dd>
+                        <dt class="col-5 text-body-secondary"> Idioma </dt>
+                        <dd class="col-7"> Português (BR) </dd>
+                    </dl>
+                </div>
+            </aside>
+        </div>
+    </section>
+</main>
+<script src="./scripts/player.js"></script>
+</body>
+
+<%- include("partials/footer.ejs") %>
