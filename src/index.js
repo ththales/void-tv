@@ -2,6 +2,7 @@
 import express from "express";
 import axios from "axios";
 import filmesRouter from "./routes/filmes.js";
+import generosRouter from "./routes/generos.js";
 
 // Constantes
 const port = 3000;
@@ -141,6 +142,7 @@ app.get("/popular", async(req, res) => {
 
 // API REST
 app.use("/api/filmes", filmesRouter);
+app.use("/api/generos", generosRouter);
 
 app.use("/api", (req, res) => {
     res.status(404).json({ erro: "Rota não encontrada." });
@@ -151,6 +153,19 @@ app.use("/api", (err, req, res, next) => {
     if (err.type === "entity.parse.failed") {
         return res.status(400).json({ erro: "JSON inválido." });
     }
+    // Erros do PostgreSQL
+    if (err.code === "23503") { // chave estrangeira
+        return res.status(400).json({ erro: "genero_id não corresponde a um gênero existente." });
+    }
+    if (err.code === "23505") { // valor duplicado (UNIQUE)
+        return res.status(409).json({ erro: "Registro já existe." });
+    }
+    if (err.code === "ECONNREFUSED" || err.code === "28P01" || err.code === "3D000") {
+        console.error("Falha de conexão com o banco:", err.message);
+        return res.status(503).json({ erro: "Banco de dados indisponível." });
+    }
+
+    console.error(err);
     res.status(500).json({ erro: "Erro interno do servidor." });
 });
 

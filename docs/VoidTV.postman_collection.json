@@ -67,7 +67,7 @@
         },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"titulo\": \"Scream\",\n  \"ano\": 1996,\n  \"genero\": \"Terror\",\n  \"duracao\": 111\n}"
+          "raw": "{\n  \"titulo\": \"Scream\",\n  \"ano\": 1996,\n  \"duracao\": 111,\n  \"genero_id\": 4\n}"
         }
       }
     },
@@ -120,7 +120,7 @@
         },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"titulo\": \"Kill Bill: Vol. 1\",\n  \"ano\": 2003,\n  \"genero\": \"Ação\",\n  \"duracao\": 111\n}"
+          "raw": "{\n  \"titulo\": \"Kill Bill: Vol. 1\",\n  \"ano\": 2003,\n  \"duracao\": 111,\n  \"genero_id\": 1\n}"
         }
       }
     },

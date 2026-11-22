@@ -1,14 +1,9 @@
 import express from "express";
+import * as filmesRepository from "../repositories/filmesRepository.js";
 
 const router = express.Router();
 
-// "Banco de dados" em memória (some quando o servidor reinicia)
-let filmes = [
-    { id: 1, titulo: "Kill Bill", ano: 2003, genero: "Ação", duracao: 111 },
-    { id: 2, titulo: "La La Land", ano: 2016, genero: "Romance", duracao: 128 },
-    { id: 3, titulo: "Oldboy", ano: 2003, genero: "Suspense", duracao: 120 }
-];
-let proximoId = 4;
+const MAX_INT = 2147483647; // limite do INTEGER do PostgreSQL
 
 // Valida os dados recebidos e retorna uma lista de erros
 function validar(body) {
@@ -16,55 +11,54 @@ function validar(body) {
 
     if (typeof body.titulo !== "string" || body.titulo.trim() === "") {
         erros.push("titulo é obrigatório e deve ser um texto.");
+    } else if (body.titulo.trim().length > 150) {
+        erros.push("titulo deve ter no máximo 150 caracteres.");
     }
-    if (!Number.isInteger(body.ano) || body.ano < 1888) {
+    if (!Number.isInteger(body.ano) || body.ano < 1888 || body.ano > MAX_INT) {
         erros.push("ano é obrigatório e deve ser um número inteiro válido.");
     }
-    if (typeof body.genero !== "string" || body.genero.trim() === "") {
-        erros.push("genero é obrigatório e deve ser um texto.");
-    }
-    if (!Number.isInteger(body.duracao) || body.duracao <= 0) {
+    if (!Number.isInteger(body.duracao) || body.duracao <= 0 || body.duracao > MAX_INT) {
         erros.push("duracao é obrigatória e deve ser um número inteiro maior que 0 (minutos).");
+    }
+    if (!Number.isInteger(body.genero_id) || body.genero_id <= 0 || body.genero_id > MAX_INT) {
+        erros.push("genero_id é obrigatório e deve ser o id de um gênero existente.");
     }
 
     return erros;
 }
 
-// Valida o :id e busca o filme. Retorna { filme } ou { status, erro }
-function buscarFilme(idParam) {
+// Converte o :id da URL em número. Retorna null se for inválido.
+function lerId(idParam) {
     const id = Number(idParam);
-
-    if (!Number.isInteger(id) || id <= 0) {
-        return { status: 400, erro: "ID inválido." };
-    }
-
-    const filme = filmes.find((f) => f.id === id);
-
-    if (!filme) {
-        return { status: 404, erro: "Filme não encontrado." };
-    }
-
-    return { filme };
+    return Number.isInteger(id) && id > 0 && id <= MAX_INT ? id : null;
 }
 
+// Obs.: no Express 5 erros em funções async vão automaticamente para o
+// middleware de erros do index.js (que trata os erros do banco).
+
 // GET /api/filmes - lista todos
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
+    const filmes = await filmesRepository.listar();
     res.status(200).json(filmes);
 });
 
 // GET /api/filmes/:id - consulta individual
-router.get("/:id", (req, res) => {
-    const resultado = buscarFilme(req.params.id);
-
-    if (!resultado.filme) {
-        return res.status(resultado.status).json({ erro: resultado.erro });
+router.get("/:id", async (req, res) => {
+    const id = lerId(req.params.id);
+    if (!id) {
+        return res.status(400).json({ erro: "ID inválido." });
     }
 
-    res.status(200).json(resultado.filme);
+    const filme = await filmesRepository.buscarPorId(id);
+    if (!filme) {
+        return res.status(404).json({ erro: "Filme não encontrado." });
+    }
+
+    res.status(200).json(filme);
 });
 
 // POST /api/filmes - cria
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
     const body = req.body ?? {};
     const erros = validar(body);
 
@@ -72,24 +66,21 @@ router.post("/", (req, res) => {
         return res.status(400).json({ erro: "Dados inválidos.", detalhes: erros });
     }
 
-    const novo = {
-        id: proximoId++,
+    const novo = await filmesRepository.criar({
         titulo: body.titulo.trim(),
         ano: body.ano,
-        genero: body.genero.trim(),
-        duracao: body.duracao
-    };
+        duracao: body.duracao,
+        genero_id: body.genero_id
+    });
 
-    filmes.push(novo);
     res.status(201).json(novo);
 });
 
 // PUT /api/filmes/:id - altera
-router.put("/:id", (req, res) => {
-    const resultado = buscarFilme(req.params.id);
-
-    if (!resultado.filme) {
-        return res.status(resultado.status).json({ erro: resultado.erro });
+router.put("/:id", async (req, res) => {
+    const id = lerId(req.params.id);
+    if (!id) {
+        return res.status(400).json({ erro: "ID inválido." });
     }
 
     const body = req.body ?? {};
@@ -99,24 +90,32 @@ router.put("/:id", (req, res) => {
         return res.status(400).json({ erro: "Dados inválidos.", detalhes: erros });
     }
 
-    const filme = resultado.filme;
-    filme.titulo = body.titulo.trim();
-    filme.ano = body.ano;
-    filme.genero = body.genero.trim();
-    filme.duracao = body.duracao;
+    const filme = await filmesRepository.atualizar(id, {
+        titulo: body.titulo.trim(),
+        ano: body.ano,
+        duracao: body.duracao,
+        genero_id: body.genero_id
+    });
+
+    if (!filme) {
+        return res.status(404).json({ erro: "Filme não encontrado." });
+    }
 
     res.status(200).json(filme);
 });
 
 // DELETE /api/filmes/:id - exclui
-router.delete("/:id", (req, res) => {
-    const resultado = buscarFilme(req.params.id);
-
-    if (!resultado.filme) {
-        return res.status(resultado.status).json({ erro: resultado.erro });
+router.delete("/:id", async (req, res) => {
+    const id = lerId(req.params.id);
+    if (!id) {
+        return res.status(400).json({ erro: "ID inválido." });
     }
 
-    filmes = filmes.filter((f) => f.id !== resultado.filme.id);
+    const excluiu = await filmesRepository.excluir(id);
+    if (!excluiu) {
+        return res.status(404).json({ erro: "Filme não encontrado." });
+    }
+
     res.status(204).send();
 });
 
