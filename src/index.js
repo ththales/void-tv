@@ -1,6 +1,7 @@
 // Imports
 import express from "express";
 import axios from "axios";
+import filmesRouter from "./routes/filmes.js";
 
 // Constantes
 const port = 3000;
@@ -21,6 +22,7 @@ const options = {
 
 // Middlewares
 app.use(express.static("public"));
+app.use(express.json());
 
 app.use((req, res, next) => {
     res.locals.year = new Date().getFullYear();
@@ -135,6 +137,21 @@ app.get("/popular", async(req, res) => {
     }
 
 
+});
+
+// API REST
+app.use("/api/filmes", filmesRouter);
+
+app.use("/api", (req, res) => {
+    res.status(404).json({ erro: "Rota não encontrada." });
+});
+
+// Erros da API (ex: JSON malformado no corpo da requisição)
+app.use("/api", (err, req, res, next) => {
+    if (err.type === "entity.parse.failed") {
+        return res.status(400).json({ erro: "JSON inválido." });
+    }
+    res.status(500).json({ erro: "Erro interno do servidor." });
 });
 
 app.listen(3000, () => {

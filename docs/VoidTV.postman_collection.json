@@ -1,0 +1,164 @@
+{
+  "info": {
+    "name": "VoidTV - API Filmes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Listar filmes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/filmes",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "filmes"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Consultar filme",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/filmes/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "filmes",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Criar filme",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/filmes",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "filmes"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Scream\",\n  \"ano\": 1996,\n  \"genero\": \"Terror\",\n  \"duracao\": 111\n}"
+        }
+      }
+    },
+    {
+      "name": "Criar filme (dados inválidos)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/filmes",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "filmes"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"\",\n  \"ano\": \"abc\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Alterar filme",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/filmes/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "filmes",
+            "1"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Kill Bill: Vol. 1\",\n  \"ano\": 2003,\n  \"genero\": \"Ação\",\n  \"duracao\": 111\n}"
+        }
+      }
+    },
+    {
+      "name": "Excluir filme",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/filmes/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "filmes",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Filme inexistente (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/filmes/99",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "filmes",
+            "99"
+          ]
+        }
+      }
+    }
+  ]
+}
